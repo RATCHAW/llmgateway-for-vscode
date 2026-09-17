@@ -1,0 +1,122 @@
+{
+	"name": "llmgateway-vscode",
+	"displayName": "LLM Gateway",
+	"description": "Use any LLM Gateway model in VS Code chat and agent mode. One API key, every provider.",
+	"version": "0.1.0",
+	"publisher": "llmgateway",
+	"license": "MIT",
+	"icon": "images/icon.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/RATCHAW/llmgateway-for-vscode.git"
+	},
+	"homepage": "https://llmgateway.io",
+	"bugs": {
+		"url": "https://github.com/RATCHAW/llmgateway-for-vscode/issues"
+	},
+	"engines": {
+		"vscode": "^1.134.0"
+	},
+	"categories": [
+		"AI",
+		"Chat"
+	],
+	"keywords": [
+		"llmgateway",
+		"llm gateway",
+		"copilot",
+		"chat",
+		"agent",
+		"claude",
+		"gpt",
+		"gemini"
+	],
+	"main": "./dist/extension.js",
+	"extensionKind": [
+		"ui",
+		"workspace"
+	],
+	"activationEvents": [
+		"onLanguageModelChatProvider:llmgateway"
+	],
+	"contributes": {
+		"languageModelChatProviders": [
+			{
+				"vendor": "llmgateway",
+				"displayName": "LLM Gateway",
+				"managementCommand": "llmgateway.setApiKey"
+			}
+		],
+		"configuration": {
+			"title": "LLM Gateway",
+			"properties": {
+				"llmgateway.baseUrl": {
+					"type": "string",
+					"default": "https://api.llmgateway.io/v1",
+					"description": "Gateway base URL used when the provider configuration does not set one. Change only for self-hosted gateways."
+				},
+				"llmgateway.models": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"markdownDescription": "Model IDs to show in the picker (for example `claude-sonnet-4-5`). Leave empty to show every model your key can access."
+				},
+				"llmgateway.reasoningEffort": {
+					"type": "string",
+					"default": "default",
+					"enum": [
+						"default",
+						"none",
+						"minimal",
+						"low",
+						"medium",
+						"high",
+						"xhigh",
+						"max"
+					],
+					"description": "Reasoning effort sent to models that support it. \"default\" lets the gateway decide."
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "llmgateway.setApiKey",
+				"title": "LLM Gateway: Set API Key"
+			},
+			{
+				"command": "llmgateway.clearApiKey",
+				"title": "LLM Gateway: Clear API Key"
+			},
+			{
+				"command": "llmgateway.refreshModels",
+				"title": "LLM Gateway: Refresh Models"
+			},
+			{
+				"command": "llmgateway.openDashboard",
+				"title": "LLM Gateway: Open Dashboard"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "pnpm run bundle",
+		"bundle": "node esbuild.mjs",
+		"watch": "node esbuild.mjs --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && tsc --noEmit",
+		"package": "vsce package --no-dependencies",
+		"publish": "vsce publish --no-dependencies"
+	},
+	"devDependencies": {
+		"@types/node": "^22.0.0",
+		"@types/vscode": "1.134.0",
+		"@vscode/vsce": "^3.0.0",
+		"esbuild": "^0.25.0",
+		"prettier": "^3.5.0",
+		"typescript": "^5.8.0",
+		"vitest": "^3.2.0"
+	}
+}

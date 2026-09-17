@@ -1,0 +1,15 @@
+.vscode/**
+.github/**
+.context/**
+src/**
+test/**
+node_modules/**
+dist/**/*.map
+esbuild.mjs
+tsconfig.json
+vitest.config.ts
+.prettierrc
+.prettierignore
+.gitignore
+pnpm-lock.yaml
+*.vsix
